@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Врач</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="tableWidget">
@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Выполнить анализ</string>
+     <string>Определить состояние</string>
     </property>
    </widget>
   </widget>
