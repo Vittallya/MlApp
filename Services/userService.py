@@ -16,10 +16,10 @@ class UserService:
         self.role = role
         self.isAutent = True
 
-    def getUserGuid(self) -> None | str:
+    def getUserGuid(self) -> str:
         return self.guid
 
-    def getUser(self) -> None | tuple:
+    def getUser(self) -> tuple:
         if self.isAutent:
             return self.guid, self.name, self.role
         return None

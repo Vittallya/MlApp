@@ -1,28 +1,40 @@
-from PyQt6 import QtCore, QtGui, QtWidgets, uic
-from PyQt6.QtWidgets import QTableWidgetItem
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QTableWidgetItem, QApplication, QMainWindow
 from Services.docService import DocService
 from Services.Db import Db
 from Services.userService import UserService
 from Services.analyzeService import make_analyze
-from UI.docWin import Ui_Doc_MainWindow
+from UI.docWin import Ui_MainWindow
 from Services.Db import Db
 import json
 import pandas as pd
 import numpy as np
 from Views.verdictWin import VerdictWin
+from Services.userService import UserService
+
 #qt_creator_file = "UI/docWin.ui"
 #Ui_Doc_Window, QtBaseClassDoc = uic.loadUiType(qt_creator_file)
 
 
-class DocWindow(QtWidgets.QMainWindow, Ui_Doc_MainWindow):
-    def __init__(self):
+class DocWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self, app: QApplication, startWin: QMainWindow):
         QtWidgets.QMainWindow.__init__(self)
-        Ui_Doc_MainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        self.app = app
+        self.startWin = startWin
         self.db = Db.unit
         self.docService = DocService(Db.unit)
+        self.userService = UserService.unit
         self.btMakeAnalyze.clicked.connect(self.on_makeAnalyze_clicked)
+        self.exit.triggered.connect(self.exitAction)
+    
+    def exitAction(self):
+        global window
         
+        window = self.startWin
+        window.show()
+        self.close()        
     
     def on_makeAnalyze_clicked(self):
         
@@ -57,17 +69,12 @@ class DocWindow(QtWidgets.QMainWindow, Ui_Doc_MainWindow):
                             recs = 'Требуется немедленная госпитализация'
                     
                     VerdictWin(state, recs, accuracy, self).show()
-                    
-            
-            
-            
-
-            
-            
-         
+                                
         
     def load(self):
         pats = self.docService.get_doc_patients(UserService.unit.getUserGuid())
+        self.menuemployeeName.setTitle(self.userService.name)
+        self.tableWidget.clear()
         l = len(pats)
         
         if l > 0:    
