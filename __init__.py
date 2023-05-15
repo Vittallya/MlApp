@@ -12,7 +12,7 @@ global window
 if __name__ == "__main__":
     Db('qszocldx', 'qszocldx', 'tt-NUA1sSoy3p9oi8zw-YrNLQvGaOmdq', 'snuffleupagus.db.elephantsql.com')
     UserService(Db.unit)
-    app = QApplication(sys.argv)    
+    app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(True)
     win = StartWindow(app)
     win.show()

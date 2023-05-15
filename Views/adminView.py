@@ -14,6 +14,38 @@ from Views.patientEditWin import PatientEditWin
 # Ui_Admin_Window, QtBaseClassAdmin = uic.loadUiType(qt_creator_file_admin_window)
 
 
+Pat_data_nums_cols = [
+    "SEX",
+	"AGE13",
+	"EDUCATION",
+	"MARITAL",
+	"PROF29",
+	"EXPOSURE",
+	"ANGINA",
+	"STROKE",
+	"HYPERTENSION",
+	"COPD",
+	"TUBERCULOSIS",
+	"CIRRHOSIS",
+	"CHOLECYSTITIS",
+	"ULCER",
+	"POLYPUS",
+	"DIABETES",
+	"DEPRESSION",
+	"MEDICATION",
+	"SIGDAY",
+	"YEARS",
+	"PASSIVE",
+	"ALCOHOL",
+	"FREQ51",
+	"SBP1",
+	"DBP1",
+	"HEIGHT",
+	"WEIGHT",
+	"WAIST",
+]
+
+
 class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, app: QApplication, startWin:QMainWindow):
         QtWidgets.QMainWindow.__init__(self)
@@ -87,8 +119,22 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         midname = self.winPat.editMidName.text()
         doctorGuid = self.winPat.cmDoctors.currentData()
         
-        self.db.execute('''INSERT INTO "Patient"(Name, Surname, Midname, DoctorGuid) VALUES
-                        (%s, %s, %s, %s)''', (name, surname, midname, doctorGuid))
+        id = self.db.getFirst('''INSERT INTO "Patient"(Name, Surname, Midname, DoctorGuid) VALUES
+                        (%s, %s, %s, %s) RETURNING Id''', (name, surname, midname, doctorGuid))
+        
+        #цифры для пациента здесь еще не могут существовать, поэтому они добавляются
+        if self.winPat.patDataNums != None:
+        
+        
+            # окне где-то лишний элемент
+            patDataNums = self.winPat.patDataNums
+            
+            colStr = ','.join(Pat_data_nums_cols)
+            valuesStr = ','.join([str(num) for num in patDataNums])
+            
+            self.db.execute(f'''INSERT INTO "Patient_data"(PatientId, {colStr}) VALUES (%s, {valuesStr}) ''',
+                            (id[0],))
+        
         self.winPat.close()
         self.reloadPatients()
         pass    
