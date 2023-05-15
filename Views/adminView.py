@@ -3,7 +3,7 @@ from Services.docService import DocService
 from Services.Db import Db
 from UI.adminWin import Ui_MainWindow
 from Services.userService import UserService
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QMessageBox
 from Services.analyzeService import get_train_data
 import pandas as pd
 import numpy as np
@@ -32,7 +32,7 @@ Pat_data_nums_cols = [
 	"POLYPUS",
 	"DIABETES",
 	"DEPRESSION",
-	"MEDICATION",
+	"MEDICATION,"
 	"SIGDAY",
 	"YEARS",
 	"PASSIVE",
@@ -43,6 +43,7 @@ Pat_data_nums_cols = [
 	"HEIGHT",
 	"WEIGHT",
 	"WAIST",
+	"THIGH",
 ]
 
 
@@ -57,11 +58,30 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btExit.triggered.connect(self.exitAction)
         self.bt_makeAnalyze.clicked.connect(self.make_analyze_pressed)
         self.btAdd.clicked.connect(self.on_add_clicked)
+        self.btRemove.clicked.connect(self.on_remove_clicked)
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.frame.hide()
         self.index = self.tabWidget.currentIndex()        
         
     
+    def on_remove_clicked(self):
+        if self.index == 1:
+            rows = list(set(index.row() for index in self.tableWidget_2.selectedIndexes()))
+            
+            if len(rows) > 0:                
+                ids = tuple(int(self.tableWidget_2.takeItem(rowIndex, 0).text()) for rowIndex in rows)
+                query = f'''DELETE FROM "Patient" WHERE Id IN ({','.join(['%s' for n in range(0, len(ids))])})'''
+                self.db.execute(query, ids)
+                self.reloadPatients()            
+        elif self.index == 0:
+            rows = list(set(index.row() for index in self.tableWidget.selectedIndexes()))
+            
+            if len(rows) > 0:                
+                guids = tuple(self.tableWidget.takeItem(rowIndex, 0).text() for rowIndex in rows)
+                query = f'''DELETE FROM "Employee" WHERE Guid IN ({','.join(['%s' for n in range(0, len(guids))])})'''
+                self.db.execute(query, guids)
+                self.reloadPatients()  
+        
     def on_add_clicked(self):
         if self.index == 1:
             self.prepareWinPat()
@@ -84,14 +104,14 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def reloadPatients(self):
         self.tableWidget_2.clear()
-        pats = self.db.getData('''SELECT p.Surname, p.Name, p.MidName, e.Surname FROM "Patient" p
+        pats = self.db.getData('''SELECT p.Id, p.Surname, p.Name, p.MidName, e.Surname FROM "Patient" p
                                INNER JOIN "Employee" e ON e.Guid = p.DoctorGuid''')
         l = len(pats)
         
         if l > 0:    
             self.tableWidget_2.setRowCount(l)
             self.tableWidget_2.setColumnCount(len(pats[0]))
-            self.tableWidget_2.setHorizontalHeaderLabels(['Фамилия', 'Имя', 'Отчество', 'Лечащий врач'])
+            self.tableWidget_2.setHorizontalHeaderLabels(['Ид', 'Фамилия', 'Имя', 'Отчество', 'Лечащий врач'])
             
             for row, rowValue in enumerate(pats):
                 for col, colValue in enumerate(rowValue):
@@ -126,7 +146,7 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.winPat.patDataNums != None:
         
         
-            # окне где-то лишний элемент
+            # ид нужно автоинкремент сделать
             patDataNums = self.winPat.patDataNums
             
             colStr = ','.join(Pat_data_nums_cols)
