@@ -17,7 +17,7 @@ from Services.Db import Db
 
 class PatientEditWin(QDialog, Ui_Dialog):
     
-    def __init__(self, parent, patData = None) -> None:
+    def __init__(self, parent, emps, patData = None) -> None:
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.isEdit = patData != None
@@ -27,11 +27,30 @@ class PatientEditWin(QDialog, Ui_Dialog):
         self.patDataNums = None
         self.patDataNumsAlreadyExists = False
         
+        selectedIndex = None
+        
+        self.cmDoctors.clear()
+        self.patNumsId = None
+        
+        for index, emp in enumerate(emps):
+            self.cmDoctors.addItem(str(emp[1]), emp[0])            
+            if selectedIndex == None and patData != None and patData[4] == emp[0]:
+                selectedIndex = index
+        
         if self.patData != None:
-            nums = self.db.getFirst('''SELECT * FROM "Patient_data" WHERE PatientId = %s ''', (patData[0]))
+            nums = self.db.getFirst('''SELECT * FROM "Patient_data" WHERE PatientId = %s ''', (patData[0],))
             self.patDataNumsAlreadyExists = nums != None
+            
             if self.patDataNumsAlreadyExists:
-                self.patDataNums = nums[2:-1]
+                self.patNumsId = nums[0]
+                self.patDataNums = nums[2:-2]
+                
+            if selectedIndex != None:
+                self.cmDoctors.setCurrentIndex(selectedIndex)
+                
+            self.editName.setText( patData[1])
+            self.editLastName.setText(patData[2])
+            self.editMidName.setText(patData[3])
         pass        
         
         

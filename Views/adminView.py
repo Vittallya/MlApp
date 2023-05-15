@@ -32,7 +32,7 @@ Pat_data_nums_cols = [
 	"POLYPUS",
 	"DIABETES",
 	"DEPRESSION",
-	"MEDICATION,"
+	"MEDICATION",
 	"SIGDAY",
 	"YEARS",
 	"PASSIVE",
@@ -59,10 +59,21 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_makeAnalyze.clicked.connect(self.make_analyze_pressed)
         self.btAdd.clicked.connect(self.on_add_clicked)
         self.btRemove.clicked.connect(self.on_remove_clicked)
+        self.btEdit.clicked.connect(self.on_edit_clicked)
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.frame.hide()
         self.index = self.tabWidget.currentIndex()        
         
+    def on_edit_clicked(self):
+        if self.index == 1:
+            rows = list(set(index.row() for index in self.tableWidget_2.selectedIndexes()))
+            
+            if len(rows) > 0:
+                id = self.tableWidget_2.item(rows[0], 0).text()
+                pat_data = self.db.getFirst('''SELECT * FROM "Patient" WHERE Id = %s''', (id,))
+                self.prepareWinPat(pat_data)
+                
+                
     
     def on_remove_clicked(self):
         if self.index == 1:
@@ -88,19 +99,18 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
         
     def prepareWinPat(self, data = None):
-        self.winPat = PatientEditWin(self, data)
         
-        self.winPat.show()
         emps = self.db.getData('''SELECT e.Guid, e.Surname from "Employee" e
                                INNER JOIN "Role" r ON r.Guid = e.RoleGuid
                                WHERE r.Name = 'Врач' ''')
-        self.winPat.cmDoctors.clear()
         
-        for emp in emps:
-            self.winPat.cmDoctors.addItem(str(emp[1]), emp[0])        
+        self.winPat = PatientEditWin(self, emps, data)
         
-        if data == None:
-            self.winPat.btAccept.clicked.connect(self.on_patient_add)
+        self.winPat.show()                 
+        self.winPat.btAccept.clicked.connect(self.on_patient_add_or_edit)
+            
+        
+        
 
     def reloadPatients(self):
         self.tableWidget_2.clear()
@@ -133,27 +143,43 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 for col, colValue in enumerate(rowValue):
                     self.tableWidget.setItem(row, col, QTableWidgetItem(str(colValue)))
         
-    def on_patient_add(self) -> None:
+    def on_patient_add_or_edit(self) -> None:
+        
         name = self.winPat.editName.text()
         surname = self.winPat.editLastName.text()
         midname = self.winPat.editMidName.text()
         doctorGuid = self.winPat.cmDoctors.currentData()
+        id = None
         
-        id = self.db.getFirst('''INSERT INTO "Patient"(Name, Surname, Midname, DoctorGuid) VALUES
-                        (%s, %s, %s, %s) RETURNING Id''', (name, surname, midname, doctorGuid))
+        if self.winPat.isEdit:
+            id = self.winPat.patData[0]
+            self.db.execute('''UPDATE "Patient" SET Name = %s, Surname = %s, Midname = %s, DoctorGuid = %s
+                            WHERE Id = %s''',
+                            (name, surname, midname, doctorGuid, id))            
+        else:        
+            id = self.db.getFirst('''INSERT INTO "Patient"(Name, Surname, Midname, DoctorGuid) VALUES
+                        (%s, %s, %s, %s) RETURNING Id''', (name, surname, midname, doctorGuid))[0]
         
-        #цифры для пациента здесь еще не могут существовать, поэтому они добавляются
         if self.winPat.patDataNums != None:
         
-        
-            # ид нужно автоинкремент сделать
-            patDataNums = self.winPat.patDataNums
+            patNums = self.winPat.patDataNums
             
-            colStr = ','.join(Pat_data_nums_cols)
-            valuesStr = ','.join([str(num) for num in patDataNums])
-            
-            self.db.execute(f'''INSERT INTO "Patient_data"(PatientId, {colStr}) VALUES (%s, {valuesStr}) ''',
-                            (id[0],))
+            if self.winPat.patDataNumsAlreadyExists:
+                query = f'''UPDATE "Patient_data" SET {", ".join([col + ' = %s' for col in Pat_data_nums_cols])}
+                            WHERE Id = %s'''
+                                        
+                params = [str(p) for p in patNums]
+                params.append(str(self.winPat.patNumsId))
+                
+                self.db.execute(query, tuple(params))
+                
+            else:            
+                colStr = ','.join(Pat_data_nums_cols)
+                valuesStr = ','.join(['%s' for i in range(0, len(patNums) + 1)])
+                
+                params = (str(id),) + tuple(str(p) for p in patNums)
+                query = f'''INSERT INTO "Patient_data"(PatientId, {colStr}) VALUES ({valuesStr})'''                
+                self.db.execute(query,params)
         
         self.winPat.close()
         self.reloadPatients()
