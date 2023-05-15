@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">font-size: 12pt;</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btAccept">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -109,7 +109,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btSwitchToData">
       <property name="styleSheet">
        <string notr="true">margin-top: 10px;
 </string>

@@ -16,7 +16,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1000, 306)
         self.pushButton = QtWidgets.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(150, 240, 75, 24))
+        self.pushButton.setGeometry(QtCore.QRect(450, 220, 111, 41))
         self.pushButton.setObjectName("pushButton")
         self.widget = QtWidgets.QWidget(Dialog)
         self.widget.setGeometry(QtCore.QRect(10, 10, 921, 171))
