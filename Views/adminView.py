@@ -3,13 +3,15 @@ from Services.docService import DocService
 from Services.Db import Db
 from UI.adminWin import Ui_MainWindow
 from Services.userService import UserService
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QMessageBox, QTableWidget
 from Services.analyzeService import get_train_data
 import pandas as pd
 import numpy as np
 import json
 from datetime import datetime
 from Views.patientEditWin import PatientEditWin
+from Views.editEmpWin import EditEmployeeWin
+from Services.employeeService import EmployeeService
 # qt_creator_file_admin_window = "UI/docWin.ui"
 # Ui_Admin_Window, QtBaseClassAdmin = uic.loadUiType(qt_creator_file_admin_window)
 
@@ -63,6 +65,9 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.frame.hide()
         self.index = self.tabWidget.currentIndex()        
+        self.empService = EmployeeService(self.db)
+        self.tableWidget.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.tableWidget_2.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         
     def on_edit_clicked(self):
         if self.index == 1:
@@ -72,6 +77,13 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 id = self.tableWidget_2.item(rows[0], 0).text()
                 pat_data = self.db.getFirst('''SELECT * FROM "Patient" WHERE Id = %s''', (id,))
                 self.prepareWinPat(pat_data)
+        elif self.index == 0:
+            rows = list(set(index.row() for index in self.tableWidget.selectedIndexes()))
+            
+            if len(rows) > 0:
+                guid = self.tableWidget.item(rows[0], 0).text()
+                emp_data = self.db.getFirst('''SELECT * FROM "Employee" WHERE Guid = %s''', (guid,))
+                self.prepareWinEmp(emp_data)
                 
                 
     
@@ -80,7 +92,7 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             rows = list(set(index.row() for index in self.tableWidget_2.selectedIndexes()))
             
             if len(rows) > 0:                
-                ids = tuple(int(self.tableWidget_2.takeItem(rowIndex, 0).text()) for rowIndex in rows)
+                ids = tuple(int(self.tableWidget_2.item(rowIndex, 0).text()) for rowIndex in rows)
                 query = f'''DELETE FROM "Patient" WHERE Id IN ({','.join(['%s' for n in range(0, len(ids))])})'''
                 self.db.execute(query, ids)
                 self.reloadPatients()            
@@ -88,15 +100,26 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             rows = list(set(index.row() for index in self.tableWidget.selectedIndexes()))
             
             if len(rows) > 0:                
-                guids = tuple(self.tableWidget.takeItem(rowIndex, 0).text() for rowIndex in rows)
+                guids = tuple(self.tableWidget.item(rowIndex, 0).text() for rowIndex in rows)
                 query = f'''DELETE FROM "Employee" WHERE Guid IN ({','.join(['%s' for n in range(0, len(guids))])})'''
                 self.db.execute(query, guids)
-                self.reloadPatients()  
+                self.reload_employee_data()  
         
     def on_add_clicked(self):
         if self.index == 1:
             self.prepareWinPat()
+        else:
+            self.prepareWinEmp()
             
+        
+    def prepareWinEmp(self, data = None):
+        roles = self.db.getData('''SELECT Guid, Name from "Role" ''')
+        
+        self.winEmp = EditEmployeeWin(self, roles, data)
+        
+        self.winEmp.show()                 
+        self.winEmp.pushButton.clicked.connect(self.on_emp_add_or_edit)
+        
         
     def prepareWinPat(self, data = None):
         
@@ -128,7 +151,7 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.tableWidget_2.setItem(row, col, QTableWidgetItem(str(colValue)))
         
         
-    def reloadEmployees(self):
+    def reload_employee_data(self):
         self.tableWidget.clear()
         emps = self.db.getData('''SELECT e.Guid, e.Surname, e.Name, e.Midname, r.Name FROM "Employee" e 
                                INNER JOIN "Role" r ON r.Guid = e.RoleGuid''')
@@ -142,6 +165,38 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             for row, rowValue in enumerate(emps):
                 for col, colValue in enumerate(rowValue):
                     self.tableWidget.setItem(row, col, QTableWidgetItem(str(colValue)))
+        
+    def on_emp_add_or_edit(self) -> None:
+        name = self.winEmp.editName.text()
+        surname = self.winEmp.editSurname.text()
+        midname = self.winEmp.editMidname.text()
+        roleGuid = self.winEmp.cmRoles.currentData()
+        login = self.winEmp.editLogin.text()
+        password = self.winEmp.editPassword.text()
+        password_else = self.winEmp.editPassword_2.text()
+        guid = self.winEmp.empGuid
+        prevLogin = self.winEmp.prevLogin
+        psw_empty = len(self.winEmp.editPassword.text()) == 0 and len(self.winEmp.editPassword_2.text()) == 0
+        
+        
+        
+        if not self.winEmp.isEdit or self.winEmp.cbChangeLoginPsw.isChecked():                    
+            if  password != password_else:
+                QMessageBox(parent= self, text="Пароли не совпадают").show()
+                return
+            
+            if  (self.winEmp.isEdit or prevLogin != login) and self.empService.is_login_exists(login):
+                QMessageBox(parent= self, text="Такой логин уже существует. Введите уникальный логин").show()
+                return
+        elif self.winEmp.isEdit:
+            self.empService.update_emp_without_usr_data(guid, name, surname, midname, roleGuid)
+            return
+        
+        
+        self.empService.add_or_edit_employee(guid, name, surname, midname, login, password, roleGuid)
+        self.winEmp.close()
+        self.reload_employee_data()
+        
         
     def on_patient_add_or_edit(self) -> None:
         
@@ -206,7 +261,7 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def load(self):
         self.btExit.setTitle(self.userSerivce.name)
         self.reloadPatients()
-        self.reloadEmployees()
+        self.reload_employee_data()
     
     def exitAction(self):
         global window

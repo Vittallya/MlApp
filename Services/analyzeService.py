@@ -6,9 +6,9 @@ import sys
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.cluster import KMeans
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-
+from Services.Db import Db
 # увеличение максимальной глубины рекурсии
-
+import json
 #тренировка модели
 def train(df: DataFrame) -> tuple:    
     df = df.fillna(0)
@@ -72,3 +72,22 @@ def make_analyze(pat, coefficients, bias) -> int:
         return 1
     else:
         return 2
+    
+
+def is_ml_data_exists(db:Db) -> bool:
+    count = db.getFirst('''SELECT COUNT(*) FROM "ML_DATA" ''')
+    return count != None and int(count[0]) > 0
+
+def get_most_accuracy_data(db:Db) -> tuple:
+    ml_data_db = db.getFirst('''SELECT DataJson, Accuracy FROM "ML_DATA" ORDER BY Accuracy DESC LIMIT 1''')
+    
+    if ml_data_db == None:
+        raise Exception("ML data does not exists")
+      
+    accuracy = float(ml_data_db[1])
+    data_ml = dict(json.loads(ml_data_db[0]))                  
+    
+    cols = data_ml.get('columns')  
+    coefficients = pd.DataFrame(data_ml["coefficients"])    
+    bias = np.array(data_ml["bias"])
+    return cols, coefficients, bias, accuracy

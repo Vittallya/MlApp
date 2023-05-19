@@ -7,5 +7,7 @@ class DocService:
         
         
     def get_doc_patients(self, doc_guid):
-        patients = self.db.getData('''SELECT * FROM "Patient" WHERE DoctorGuid = %s''', (doc_guid,))
+        patients = self.db.getData('''
+                                    SELECT p.Id, p.Surname, p.Name, p.Midname FROM "Patient" p WHERE DoctorGuid = %s
+                                    ''', (doc_guid,))
         return patients

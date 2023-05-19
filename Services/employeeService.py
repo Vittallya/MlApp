@@ -2,9 +2,10 @@
 from uuid import uuid4
 from math import ceil, floor
 from werkzeug.security import generate_password_hash
+from Services.Db import Db
 
 class EmployeeService:
-    def __init__(self, db) -> None:
+    def __init__(self, db:Db) -> None:
         self.db = db  
         
 
@@ -46,32 +47,34 @@ class EmployeeService:
             self.db.execute('''INSERT INTO EmployeeUser (Id, Login, AccessLevel, UserRole)
                             VALUES(%s, %s, %s, %s)''', (uuid, login, acc_level, role))
             
-    def check_login(self, uuid, login):
+    def is_login_exists(self, login) -> bool:
         
-        query = '''SELECT COUNT(*) FROM EmployeeUser u WHERE u.Login = %s'''
+        query = '''SELECT COUNT(*) FROM "Employee" e WHERE e.Login = %s'''
         params = (login,)
-        
-        if uuid != None:
-            query += ' AND u.Id <> %s'
-            params = params + (uuid,)
-        
-        return self.db.getFirst(query, params)[0]
+        req = self.db.getFirst(query, params)
+        return req != None and int(req[0]) > 0
+
     
-    def add_or_edit_employee(self, uuid, name, surname, midname, phone, date_start, posId, restId):
+    def update_emp_without_usr_data(self, guid, name, surname, midname, roleGuid):
+        self.db.execute('''UPDATE "Employee" e SET Name = %s, Surname = %s, Midname = %s, RoleGuid = %s
+                            WHERE e.Guid = %s''', 
+                            (name, surname, midname, roleGuid, guid))
+    
+    def add_or_edit_employee(self, guid, name, surname, midname, login, password, roleGuid):        
         
-        if uuid == None:
-            uuid = uuid4().hex
-            self.db.execute('''INSERT INTO Employee 
-                            (Id, Name, Surname, Midname, StartWorkDate, Phone, PositionId, RestoranId) VALUES
-                            (%s, %s, %s, %s, %s, %s, %s, %s)''', 
-                            (uuid, name, surname, midname, date_start, phone, int(posId), int(restId)))
+        if guid == None:
+            guid = uuid4().hex
+            self.db.execute('''INSERT INTO "Employee" 
+                            (Guid, Name, Surname, Midname, Login, PasswordHash, RoleGuid) VALUES
+                            (%s, %s, %s, %s, %s, %s, %s)''', 
+                            (guid, name, surname, midname, login, generate_password_hash(password), roleGuid))
         else:
-            self.db.execute('''UPDATE Employee e SET Name = %s, Surname = %s, Midname = %s,
-                            StartWorkDate = %s, Phone = %s, PositionId = %s, RestoranId = %s
-                            WHERE e.Id = %s''', 
-                            (name, surname, midname, date_start, phone, int(posId), int(restId), uuid))
+            self.db.execute('''UPDATE "Employee" e SET Name = %s, Surname = %s, Midname = %s,
+                            RoleGuid = %s, Login = %s, PasswordHash = %s
+                            WHERE e.Guid = %s''', 
+                            (name, surname, midname, roleGuid, login, generate_password_hash(password), guid))
         
-        return uuid
+        return guid
         
                 
         
