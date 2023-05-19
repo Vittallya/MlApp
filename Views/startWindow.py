@@ -17,7 +17,8 @@ class StartWindow(QtWidgets.QMainWindow, Ui_Start_Window):
     def __init__(self, app: QApplication):
         QtWidgets.QMainWindow.__init__(self)
         Ui_Start_Window.__init__(self)
-        self.setupUi(self)        
+        self.setupUi(self)    
+        self.passwordText.setEchoMode(QLineEdit.EchoMode.Password)    
         self.pushButton.clicked.connect(self.on_login_clicked)
         self.app = app
         self.loginService = LoginService(Db.unit)
