@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'UI/docWin.ui'
+# Form implementation generated from reading ui file 'e:\Projects\Python\MlApp\UI\docWin.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 555)
+        MainWindow.resize(800, 640)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
@@ -22,8 +22,9 @@ class Ui_MainWindow(object):
         self.tableWidget.setRowCount(0)
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.verticalHeader().setVisible(False)
         self.btMakeAnalyze = QtWidgets.QPushButton(self.centralwidget)
-        self.btMakeAnalyze.setGeometry(QtCore.QRect(280, 450, 201, 51))
+        self.btMakeAnalyze.setGeometry(QtCore.QRect(270, 540, 201, 51))
         self.btMakeAnalyze.setObjectName("btMakeAnalyze")
         self.splitter = QtWidgets.QSplitter(self.centralwidget)
         self.splitter.setGeometry(QtCore.QRect(20, 50, 191, 21))

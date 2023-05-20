@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QTableWidgetItem, QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QTableWidgetItem, QApplication, QMainWindow, QMessageBox, QTableWidget, QTableView, QHeaderView
 from Services.docService import DocService
 from Services.Db import Db
 from Services.userService import UserService
@@ -11,6 +11,8 @@ import pandas as pd
 import numpy as np
 from Views.verdictWin import VerdictWin
 from Services.userService import UserService
+from PyQt5.QtCore import Qt
+
 #qt_creator_file = "UI/docWin.ui"
 #Ui_Doc_Window, QtBaseClassDoc = uic.loadUiType(qt_creator_file)
 
@@ -27,6 +29,30 @@ class DocWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.userService = UserService.unit
         self.btMakeAnalyze.clicked.connect(self.on_makeAnalyze_clicked)
         self.exit.triggered.connect(self.exitAction)
+        self.editSearch.textChanged.connect(self.on_search)
+        self.tableWidget.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)        
+        #self.tableWidget.horizontalHeader().setStretchLastSection(True) 
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+    
+    def on_search(self, text):        
+        rowCount = self.tableWidget.rowCount()
+        search_cols = [1,2,3]
+        
+        if text:                    
+            
+            for rowIndex in range(0, rowCount):
+                self.tableWidget.hideRow(rowIndex)
+            
+            items = self.tableWidget.findItems(text, Qt.MatchFlag.MatchContains)
+            
+            for item in items:
+                if item.column() in search_cols:
+                    self.tableWidget.showRow(item.row())
+        else:            
+            for rowIndex in range(0, rowCount):
+                self.tableWidget.showRow(rowIndex)
+        pass
+        
     
     def exitAction(self):
         global window
@@ -68,17 +94,24 @@ class DocWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     state = 'Тяжелое состояние'
                     recs = 'Требуется немедленная госпитализация'
             
-            VerdictWin(state, recs, accuracy, self).show()
+            
+            surname = self.tableWidget.item(rows[0], 1).text() 
+            name = self.tableWidget.item(rows[0], 2).text() 
+            midname = self.tableWidget.item(rows[0], 3).text()                         
+            
+            initials = f'{surname} {name[0]}. {midname[0]}.'
+            
+            VerdictWin(self, {'acc':str(accuracy), 'state': state, 'recs':recs, 'Fio': initials}).show()
                                 
         
     def load(self):
         pats = self.docService.get_doc_patients(UserService.unit.getUserGuid())
         self.menuemployeeName.setTitle(self.userService.name)
         self.tableWidget.clear()
-        l = len(pats)
+        self.row_count = len(pats)
         
-        if l > 0:    
-            self.tableWidget.setRowCount(l)
+        if self.row_count > 0:    
+            self.tableWidget.setRowCount(self.row_count)
             self.tableWidget.setColumnCount(len(pats[0]))
             self.tableWidget.setHorizontalHeaderLabels(['Ид', 'Фамилия', 'Имя', 'Отчество'])
             

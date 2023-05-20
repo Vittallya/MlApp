@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'UI/patientVerdictWin.ui'
+# Form implementation generated from reading ui file 'e:\Projects\Python\MlApp\UI\patientVerdictWin.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #

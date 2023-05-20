@@ -1,6 +1,7 @@
 from UI.editEmployeeWin import Ui_Dialog
 from PyQt5.QtWidgets import QDialog, QLineEdit, QComboBox
-
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtCore import QRegExp
 
 
 class EditEmployeeWin(QDialog, Ui_Dialog):
@@ -15,6 +16,10 @@ class EditEmployeeWin(QDialog, Ui_Dialog):
         self.editPassword.setEchoMode(QLineEdit.EchoMode.Password)
         self.editPassword_2.setEchoMode(QLineEdit.EchoMode.Password)
         self.prevLogin = None
+        
+        #self.editPassword.setValidator(QRegExpValidator(QRegExp(r"^(?=.*[0-9])(?=.*[a-z])([a-z0-9_-]+)$"), self.editPassword))
+        #self.editPassword.keyPressed.connect(self.on_line_edit_key_pressed)
+        
         
         for index, role in enumerate(roles):
             self.cmRoles.addItem(str(role[1]), role[0])            
@@ -34,6 +39,9 @@ class EditEmployeeWin(QDialog, Ui_Dialog):
             self.editLogin.setText(empData[4])            
         else:
             self.cbChangeLoginPsw.hide()   
+    
+    def on_line_edit_key_pressed(self, event):
+        pass
     
     def state_changed(self, checked):
         self.toggle_boxes(checked)

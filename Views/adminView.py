@@ -59,6 +59,8 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.userSerivce = UserService.unit
         self.btExit.triggered.connect(self.exitAction)
         self.bt_makeAnalyze.clicked.connect(self.make_analyze_pressed)
+        self.bt_removeCoefs.clicked.connect(self.on_remove_clicked)
+        
         self.btAdd.clicked.connect(self.on_add_clicked)
         self.btRemove.clicked.connect(self.on_remove_clicked)
         self.btEdit.clicked.connect(self.on_edit_clicked)
@@ -67,8 +69,13 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.index = self.tabWidget.currentIndex()        
         self.empService = EmployeeService(self.db)
         self.tableWidget.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
-        self.tableWidget_2.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.tableWidget_2.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)        
+        self.tableWidget_2.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)        
+        self.tableAnalyze.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)        
+        self.tableAnalyze.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         
+   
     def on_edit_clicked(self):
         if self.index == 1:
             rows = list(set(index.row() for index in self.tableWidget_2.selectedIndexes()))
@@ -104,6 +111,15 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 query = f'''DELETE FROM "Employee" WHERE Guid IN ({','.join(['%s' for n in range(0, len(guids))])})'''
                 self.db.execute(query, guids)
                 self.reload_employee_data()  
+        elif self.index == 2:
+            rows = list(set(index.row() for index in self.tableAnalyze.selectedIndexes()))
+            
+            if len(rows) > 0:                
+                ids = tuple(self.tableAnalyze.item(rowIndex, 0).text() for rowIndex in rows)
+                query = f'''DELETE FROM "ML_DATA" WHERE Id IN ({','.join(['%s' for n in range(0, len(ids))])})'''
+                self.db.execute(query, ids)
+                self.reload_analyze_data() 
+            
         
     def on_add_clicked(self):
         if self.index == 1:
@@ -132,8 +148,6 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.winPat.show()                 
         self.winPat.btAccept.clicked.connect(self.on_patient_add_or_edit)
             
-        
-        
 
     def reloadPatients(self):
         self.tableWidget_2.clear()
@@ -150,6 +164,21 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 for col, colValue in enumerate(rowValue):
                     self.tableWidget_2.setItem(row, col, QTableWidgetItem(str(colValue)))
         
+        
+    def reload_analyze_data(self):
+        self.tableAnalyze.clear()
+        data = self.db.getData('''SELECT Id, DateTime, Accuracy FROM "ML_DATA" ''')
+        l = len(data)
+        
+        if l > 0:    
+            self.tableAnalyze.setRowCount(l)
+            self.tableAnalyze.setColumnCount(len(data[0]))
+            self.tableAnalyze.hideColumn(0)
+            self.tableAnalyze.setHorizontalHeaderLabels(['Id','Дата и время проведения анализа', 'Оценка точности'])
+            
+            for row, rowValue in enumerate(data):
+                for col, colValue in enumerate(rowValue):
+                    self.tableAnalyze.setItem(row, col, QTableWidgetItem(str(colValue)))
         
     def reload_employee_data(self):
         self.tableWidget.clear()
@@ -255,14 +284,14 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         dict_, acc = get_train_data(df)
         jsonStr = json.dumps(dict_)
         Db.unit.getFirst('''INSERT INTO "ML_DATA" (DateTime, DataJson, Accuracy) VALUES (%s, %s, %s) RETURNING Id''', (datetime.now(), jsonStr, acc))
-
-
+        self.reload_analyze_data()                
     
     def load(self):
         self.btExit.setTitle(self.userSerivce.name)
         self.reloadPatients()
         self.reload_employee_data()
-    
+        self.reload_analyze_data()
+        
     def exitAction(self):
         global window
         
