@@ -18,7 +18,7 @@ class PatientEditWin(QDialog, Ui_Dialog):
         self.db = Db.unit
         self.patDataNums = None
         self.patDataNumsAlreadyExists = False
-        
+        self.btAccept.setEnabled(self.isEdit)
         selectedIndex = None
         
         self.cmDoctors.clear()

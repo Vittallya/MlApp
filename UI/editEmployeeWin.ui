@@ -31,11 +31,14 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>190</x>
      <y>660</y>
      <width>141</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
@@ -50,6 +53,12 @@ QPushButton:hover{
 background-color: rgb(38, 86, 131);
 color: white;
 }
+QPushButton:disabled{
+	border: 1px solid rgb(109, 109, 109);
+	background-color: transparent;
+	color: rgb(109, 109, 109);
+}
+
 </string>
    </property>
    <property name="text">

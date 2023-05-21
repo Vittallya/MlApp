@@ -73,12 +73,15 @@ color: white;
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>SEX</string>
+           <string>Пол</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="doubleSpinBox">
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
           <property name="decimals">
            <number>0</number>
           </property>
@@ -97,7 +100,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>AGE13</string>
+           <string>Возраст</string>
           </property>
          </widget>
         </item>
@@ -110,7 +113,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>150.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -121,7 +124,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>EDUCATION</string>
+           <string>Образование</string>
           </property>
          </widget>
         </item>
@@ -134,7 +137,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>4.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -145,7 +148,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>MARTIAL</string>
+           <string>Сем. полож.</string>
           </property>
          </widget>
         </item>
@@ -158,7 +161,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>3.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -169,7 +172,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>PROF29</string>
+           <string>Спец-ция</string>
           </property>
          </widget>
         </item>
@@ -179,10 +182,10 @@ color: white;
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>0.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>7.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -193,7 +196,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>EXPOSURE</string>
+           <string>Вр. усл. труда</string>
           </property>
          </widget>
         </item>
@@ -206,7 +209,7 @@ color: white;
            <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2.000000000000000</double>
+           <double>7.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -217,7 +220,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>ANGINA</string>
+           <string>Стенокардия</string>
           </property>
          </widget>
         </item>
@@ -230,7 +233,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -241,7 +244,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>STROKE</string>
+           <string>Инсульт</string>
           </property>
          </widget>
         </item>
@@ -254,7 +257,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -265,7 +268,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_10">
           <property name="text">
-           <string>HYPERTENSION</string>
+           <string>Гипертония</string>
           </property>
          </widget>
         </item>
@@ -278,7 +281,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -289,7 +292,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>COPD</string>
+           <string>ХОБЛ</string>
           </property>
          </widget>
         </item>
@@ -302,7 +305,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -317,7 +320,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_11">
           <property name="text">
-           <string>TUBERCULOSIS</string>
+           <string>Туберкулез</string>
           </property>
          </widget>
         </item>
@@ -327,10 +330,10 @@ color: white;
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -341,7 +344,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>CIRRHOSIS</string>
+           <string>Цирроз</string>
           </property>
          </widget>
         </item>
@@ -354,7 +357,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -365,7 +368,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>CHOLECYSTITIS</string>
+           <string>Холецистит</string>
           </property>
          </widget>
         </item>
@@ -378,7 +381,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -389,7 +392,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>ULCER</string>
+           <string>Язва</string>
           </property>
          </widget>
         </item>
@@ -402,7 +405,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -413,7 +416,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_15">
           <property name="text">
-           <string>POLYPUS</string>
+           <string>Полип</string>
           </property>
          </widget>
         </item>
@@ -426,7 +429,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -437,7 +440,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_16">
           <property name="text">
-           <string>DIABETES</string>
+           <string>Диабет</string>
           </property>
          </widget>
         </item>
@@ -447,10 +450,10 @@ color: white;
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -461,7 +464,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_17">
           <property name="text">
-           <string>DEPRESSION</string>
+           <string>Депрессия</string>
           </property>
          </widget>
         </item>
@@ -474,7 +477,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -485,7 +488,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_18">
           <property name="text">
-           <string>MEDICATION</string>
+           <string>Медикаменты</string>
           </property>
          </widget>
         </item>
@@ -498,7 +501,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -509,7 +512,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_19">
           <property name="text">
-           <string>SIGDAY</string>
+           <string>Сиг/день</string>
           </property>
          </widget>
         </item>
@@ -533,7 +536,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_20">
           <property name="text">
-           <string>YEARS</string>
+           <string>Стаж курения</string>
           </property>
          </widget>
         </item>
@@ -546,7 +549,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>150.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -561,7 +564,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_21">
           <property name="text">
-           <string>PASSIVE</string>
+           <string>Пассивное кур-е</string>
           </property>
          </widget>
         </item>
@@ -571,10 +574,10 @@ color: white;
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -585,7 +588,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_22">
           <property name="text">
-           <string>ALCOHOL</string>
+           <string>Алкоголь</string>
           </property>
          </widget>
         </item>
@@ -598,7 +601,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -609,7 +612,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_23">
           <property name="text">
-           <string>FREQ51</string>
+           <string>Алк. дн/нед</string>
           </property>
          </widget>
         </item>
@@ -622,7 +625,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>7.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -633,7 +636,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_24">
           <property name="text">
-           <string>SBP1</string>
+           <string>Сист. давление</string>
           </property>
          </widget>
         </item>
@@ -646,7 +649,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -657,7 +660,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_25">
           <property name="text">
-           <string>DBP1</string>
+           <string>Диаст. давление</string>
           </property>
          </widget>
         </item>
@@ -670,7 +673,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -681,7 +684,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_26">
           <property name="text">
-           <string>HEIGHT</string>
+           <string>Рост</string>
           </property>
          </widget>
         </item>
@@ -694,7 +697,7 @@ color: white;
            <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2.000000000000000</double>
+           <double>250.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -705,7 +708,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_27">
           <property name="text">
-           <string>WEIGHT</string>
+           <string>Вес</string>
           </property>
          </widget>
         </item>
@@ -718,7 +721,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>300.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -729,7 +732,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_28">
           <property name="text">
-           <string>WAIST</string>
+           <string>Талия</string>
           </property>
          </widget>
         </item>
@@ -742,7 +745,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -753,7 +756,7 @@ color: white;
         <item>
          <widget class="QLabel" name="label_29">
           <property name="text">
-           <string>THIGH</string>
+           <string>Объем бедер</string>
           </property>
          </widget>
         </item>
@@ -766,7 +769,7 @@ color: white;
            <double>0.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>1000.000000000000000</double>
+           <double>200.000000000000000</double>
           </property>
          </widget>
         </item>

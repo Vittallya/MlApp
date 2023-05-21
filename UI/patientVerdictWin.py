@@ -17,7 +17,7 @@ class Ui_Dialog(object):
         Dialog.resize(663, 416)
         Dialog.setStyleSheet("font: 9pt \"Trebuchet MS\";")
         self.bt_accept = QtWidgets.QPushButton(Dialog)
-        self.bt_accept.setGeometry(QtCore.QRect(260, 330, 141, 41))
+        self.bt_accept.setGeometry(QtCore.QRect(260, 360, 141, 41))
         self.bt_accept.setStyleSheet("QPushButton{\n"
 "    border-radius: 5px;\n"
 "    font-size: 11pt;\n"
@@ -33,7 +33,7 @@ class Ui_Dialog(object):
 "")
         self.bt_accept.setObjectName("bt_accept")
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
-        self.tableWidget.setGeometry(QtCore.QRect(80, 90, 521, 192))
+        self.tableWidget.setGeometry(QtCore.QRect(80, 90, 521, 251))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)

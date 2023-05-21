@@ -19,7 +19,8 @@ class Ui_Dialog(object):
         Dialog.setMaximumSize(QtCore.QSize(560, 730))
         Dialog.setStyleSheet("font: 10pt \"Trebuchet MS\";")
         self.pushButton = QtWidgets.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(200, 660, 141, 41))
+        self.pushButton.setGeometry(QtCore.QRect(190, 660, 141, 41))
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton.setStyleSheet("QPushButton{\n"
 "    border-radius: 5px;\n"
 "    font-size: 11pt;\n"
@@ -32,6 +33,12 @@ class Ui_Dialog(object):
 "background-color: rgb(38, 86, 131);\n"
 "color: white;\n"
 "}\n"
+"QPushButton:disabled{\n"
+"    border: 1px solid rgb(109, 109, 109);\n"
+"    background-color: transparent;\n"
+"    color: rgb(109, 109, 109);\n"
+"}\n"
+"\n"
 "")
         self.pushButton.setObjectName("pushButton")
         self.label_8 = QtWidgets.QLabel(Dialog)

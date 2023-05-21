@@ -32,8 +32,22 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.verticalHeader().setVisible(False)
-        self.btMakeAnalyze = QtWidgets.QPushButton(self.centralwidget)
-        self.btMakeAnalyze.setGeometry(QtCore.QRect(280, 450, 201, 51))
+        self.splitter = QtWidgets.QSplitter(self.centralwidget)
+        self.splitter.setGeometry(QtCore.QRect(20, 50, 191, 19))
+        self.splitter.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter.setObjectName("splitter")
+        self.label = QtWidgets.QLabel(self.splitter)
+        self.label.setObjectName("label")
+        self.editSearch = QtWidgets.QLineEdit(self.splitter)
+        self.editSearch.setObjectName("editSearch")
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(200, 440, 381, 61))
+        self.widget.setObjectName("widget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.btMakeAnalyze = QtWidgets.QPushButton(self.widget)
+        self.btMakeAnalyze.setMinimumSize(QtCore.QSize(0, 40))
         self.btMakeAnalyze.setStyleSheet("QPushButton{\n"
 "    border-radius: 5px;\n"
 "    font-size: 11pt;\n"
@@ -48,14 +62,24 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.btMakeAnalyze.setObjectName("btMakeAnalyze")
-        self.splitter = QtWidgets.QSplitter(self.centralwidget)
-        self.splitter.setGeometry(QtCore.QRect(20, 50, 191, 19))
-        self.splitter.setOrientation(QtCore.Qt.Horizontal)
-        self.splitter.setObjectName("splitter")
-        self.label = QtWidgets.QLabel(self.splitter)
-        self.label.setObjectName("label")
-        self.editSearch = QtWidgets.QLineEdit(self.splitter)
-        self.editSearch.setObjectName("editSearch")
+        self.horizontalLayout.addWidget(self.btMakeAnalyze)
+        self.btViewData = QtWidgets.QPushButton(self.widget)
+        self.btViewData.setMinimumSize(QtCore.QSize(0, 40))
+        self.btViewData.setStyleSheet("QPushButton{\n"
+"    border-radius: 5px;\n"
+"    font-size: 11pt;\n"
+"    background-color: transparent;\n"
+"    border: 2px solid rgb(38, 86, 131);\n"
+"    transition: all 1s ease-out;\n"
+"    color: rgb(38, 86, 131);\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: rgb(38, 86, 131);\n"
+"color: white;\n"
+"}\n"
+"")
+        self.btViewData.setObjectName("btViewData")
+        self.horizontalLayout.addWidget(self.btViewData)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 20))
@@ -74,7 +98,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Врач"))
-        self.btMakeAnalyze.setText(_translate("MainWindow", "Определить состояние"))
         self.label.setText(_translate("MainWindow", "Поиск:"))
+        self.btMakeAnalyze.setText(_translate("MainWindow", "Определить состояние"))
+        self.btViewData.setText(_translate("MainWindow", "Посмотреть данные"))
         self.menuemployeeName.setTitle(_translate("MainWindow", "employeeName"))
         self.exit.setText(_translate("MainWindow", "Выход"))

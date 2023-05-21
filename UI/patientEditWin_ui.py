@@ -20,18 +20,24 @@ class Ui_Dialog(object):
         Dialog.setStyleSheet("font: 10pt \"Trebuchet MS\";")
         self.btAccept = QtWidgets.QPushButton(Dialog)
         self.btAccept.setGeometry(QtCore.QRect(180, 470, 161, 51))
+        self.btAccept.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btAccept.setStyleSheet("QPushButton{\n"
 "    border-radius: 5px;\n"
 "    font-size: 11pt;\n"
 "    background-color: transparent;\n"
 "    border: 2px solid rgb(38, 86, 131);\n"
-"    transition: all 1s ease-out;\n"
 "    color: rgb(38, 86, 131);\n"
 "}\n"
 "QPushButton:hover{\n"
-"background-color: rgb(38, 86, 131);\n"
-"color: white;\n"
+"    background-color: rgb(38, 86, 131);\n"
+"    color: white;\n"
 "}\n"
+"QPushButton:disabled{\n"
+"    border: 1px solid rgb(109, 109, 109);\n"
+"    background-color: transparent;\n"
+"    color: rgb(109, 109, 109);\n"
+"}\n"
+"\n"
 "")
         self.btAccept.setObjectName("btAccept")
         self.label_5 = QtWidgets.QLabel(Dialog)

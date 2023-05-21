@@ -21,6 +21,7 @@ class VerdictWin(QtWidgets.QDialog, Ui_Dialog):
         
         self.tableWidget.setItem(2, 0, QtWidgets.QTableWidgetItem('Состояние пациента'))
         self.tableWidget.setItem(2, 1, QtWidgets.QTableWidgetItem(data.get('state')))
+        self.tableWidget.setRowHeight(3, 80)
         
         self.tableWidget.setItem(3, 0, QtWidgets.QTableWidgetItem('Рекомендации'))
         self.tableWidget.setItem(3, 1, QtWidgets.QTableWidgetItem(data.get('recs')))

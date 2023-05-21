@@ -12,7 +12,9 @@ import numpy as np
 from Views.verdictWin import VerdictWin
 from Services.userService import UserService
 from PyQt5.QtCore import Qt
-
+from Views.adminView import Pat_data_nums_cols
+from Views.patientDataWin import PatientDataWin
+from Views.patientDataViewWin import PatientDataViewWin
 #qt_creator_file = "UI/docWin.ui"
 #Ui_Doc_Window, QtBaseClassDoc = uic.loadUiType(qt_creator_file)
 
@@ -33,6 +35,26 @@ class DocWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableWidget.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)        
         #self.tableWidget.horizontalHeader().setStretchLastSection(True) 
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.btViewData.clicked.connect(self.on_view_data_clicked)
+        
+        
+    
+    def on_view_data_clicked(self):
+        rows = list(set(index.row() for index in self.tableWidget.selectedIndexes()))
+            
+        if len(rows) > 0:
+            id = self.tableWidget.item(rows[0], 0).text() 
+            
+            cols = ','.join(Pat_data_nums_cols)
+             
+            pat_data = self.db.getFirst(f'''SELECT {cols} FROM "Patient_data"
+                                            WHERE PatientId = %s''', (id,))
+            if pat_data == None:
+                QMessageBox(parent=self, text= "Данных для этого пациента не найдено").show()
+                return
+            win = PatientDataViewWin(self, pat_data)
+            win.show()
+            
     
     def on_search(self, text):        
         rowCount = self.tableWidget.rowCount()
@@ -113,6 +135,7 @@ class DocWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.row_count > 0:    
             self.tableWidget.setRowCount(self.row_count)
             self.tableWidget.setColumnCount(len(pats[0]))
+            self.tableWidget.hideColumn(0)
             self.tableWidget.setHorizontalHeaderLabels(['Ид', 'Фамилия', 'Имя', 'Отчество'])
             
             for row, rowValue in enumerate(pats):

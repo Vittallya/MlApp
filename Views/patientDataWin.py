@@ -6,7 +6,7 @@ from PyQt5 import Qt
 class PatientDataWin(QDialog, Ui_Dialog):
     
     
-    def __init__(self, parent, patDataNums = None) -> None:
+    def __init__(self, parent, patDataNums = None, readOnly = False) -> None:
         super().__init__(parent)
         QDialog.__init__(self, parent)
         self.setupUi(self)
@@ -18,5 +18,8 @@ class PatientDataWin(QDialog, Ui_Dialog):
         if(patDataNums != None):
             for i in range(0, len(patDataNums)):
                 allNumBoxes[i].setValue(int(patDataNums[i]))
+                allNumBoxes[i].setEnabled(not readOnly)
         
         pass
+    
+    
