@@ -6,56 +6,69 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>415</height>
+    <width>740</width>
+    <height>350</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>740</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>740</width>
+    <height>350</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Коэффициенты и смещения</string>
   </property>
-  <widget class="QPushButton" name="btClose">
-   <property name="geometry">
-    <rect>
-     <x>580</x>
-     <y>350</y>
-     <width>131</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Закрыть</string>
-   </property>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Trebuchet MS&quot;;</string>
+  </property>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>30</y>
-     <width>691</width>
+     <y>20</y>
+     <width>701</width>
      <height>291</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QFrame" name="frame1">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="maximumSize">
-          <size>
-           <width>225</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Коэффициенты:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="coefsTable"/>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>1</x>
+         <y>1</y>
+         <width>90</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>225</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Коэффициенты:</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="coefsTable">
+       <property name="geometry">
+        <rect>
+         <x>1</x>
+         <y>21</y>
+         <width>701</width>
+         <height>192</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </item>
     <item>
@@ -63,7 +76,7 @@
       <property name="maximumSize">
        <size>
         <width>225</width>
-        <height>16777215</height>
+        <height>30</height>
        </size>
       </property>
       <property name="text">

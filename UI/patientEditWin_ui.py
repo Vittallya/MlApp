@@ -14,23 +14,38 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(511, 690)
-        Dialog.setStyleSheet("font-size: 12pt;")
+        Dialog.resize(520, 540)
+        Dialog.setMinimumSize(QtCore.QSize(520, 540))
+        Dialog.setMaximumSize(QtCore.QSize(520, 540))
+        Dialog.setStyleSheet("font: 10pt \"Trebuchet MS\";")
         self.btAccept = QtWidgets.QPushButton(Dialog)
-        self.btAccept.setGeometry(QtCore.QRect(170, 600, 161, 51))
+        self.btAccept.setGeometry(QtCore.QRect(180, 470, 161, 51))
+        self.btAccept.setStyleSheet("QPushButton{\n"
+"    border-radius: 5px;\n"
+"    font-size: 11pt;\n"
+"    background-color: transparent;\n"
+"    border: 2px solid rgb(38, 86, 131);\n"
+"    transition: all 1s ease-out;\n"
+"    color: rgb(38, 86, 131);\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: rgb(38, 86, 131);\n"
+"color: white;\n"
+"}\n"
+"")
         self.btAccept.setObjectName("btAccept")
         self.label_5 = QtWidgets.QLabel(Dialog)
-        self.label_5.setGeometry(QtCore.QRect(130, 20, 439, 51))
+        self.label_5.setGeometry(QtCore.QRect(120, 10, 281, 51))
+        self.label_5.setStyleSheet("font: 16pt \"Century Gothic\";")
         self.label_5.setObjectName("label_5")
         self.widget = QtWidgets.QWidget(Dialog)
-        self.widget.setGeometry(QtCore.QRect(30, 100, 451, 411))
+        self.widget.setGeometry(QtCore.QRect(20, 100, 481, 331))
         self.widget.setObjectName("widget")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(self.widget)
+        self.label.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.editLastName = QtWidgets.QLineEdit(self.widget)
@@ -38,6 +53,7 @@ class Ui_Dialog(object):
         self.editLastName.setObjectName("editLastName")
         self.verticalLayout.addWidget(self.editLastName)
         self.label_2 = QtWidgets.QLabel(self.widget)
+        self.label_2.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
         self.editName = QtWidgets.QLineEdit(self.widget)
@@ -45,6 +61,7 @@ class Ui_Dialog(object):
         self.editName.setObjectName("editName")
         self.verticalLayout.addWidget(self.editName)
         self.label_3 = QtWidgets.QLabel(self.widget)
+        self.label_3.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
         self.editMidName = QtWidgets.QLineEdit(self.widget)
@@ -52,18 +69,19 @@ class Ui_Dialog(object):
         self.editMidName.setObjectName("editMidName")
         self.verticalLayout.addWidget(self.editMidName)
         self.label_4 = QtWidgets.QLabel(self.widget)
+        self.label_4.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label_4.setObjectName("label_4")
         self.verticalLayout.addWidget(self.label_4)
         self.cmDoctors = QtWidgets.QComboBox(self.widget)
         self.cmDoctors.setObjectName("cmDoctors")
         self.verticalLayout.addWidget(self.cmDoctors)
-        self.verticalLayout_2.addLayout(self.verticalLayout)
         self.btSwitchToData = QtWidgets.QPushButton(self.widget)
+        self.btSwitchToData.setMinimumSize(QtCore.QSize(0, 50))
         self.btSwitchToData.setStyleSheet("margin-top: 10px;\n"
 "")
         self.btSwitchToData.setCheckable(False)
         self.btSwitchToData.setObjectName("btSwitchToData")
-        self.verticalLayout_2.addWidget(self.btSwitchToData)
+        self.verticalLayout.addWidget(self.btSwitchToData)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -72,7 +90,7 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.btAccept.setText(_translate("Dialog", "Применить"))
-        self.label_5.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">Добавить новую запись</span></p></body></html>"))
+        self.label_5.setText(_translate("Dialog", "<html><head/><body><p align=\"center\">Добавление записи</p></body></html>"))
         self.label.setText(_translate("Dialog", "Фамилия"))
         self.label_2.setText(_translate("Dialog", "Имя"))
         self.label_3.setText(_translate("Dialog", "Отчество"))

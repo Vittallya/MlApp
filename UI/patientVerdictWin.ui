@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Вердикт</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Trebuchet MS&quot;;</string>
+  </property>
   <widget class="QPushButton" name="bt_accept">
    <property name="geometry">
     <rect>
@@ -21,6 +24,21 @@
      <width>141</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	border-radius: 5px;
+	font-size: 11pt;
+	background-color: transparent;
+	border: 2px solid rgb(38, 86, 131);
+	transition: all 1s ease-out;
+	color: rgb(38, 86, 131);
+}
+QPushButton:hover{
+background-color: rgb(38, 86, 131);
+color: white;
+}
+</string>
    </property>
    <property name="text">
     <string>Принять</string>
@@ -50,6 +68,9 @@
      <width>401</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 12pt &quot;Century Gothic&quot;;</string>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700;&quot;&gt;Оценка состояния пациента&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

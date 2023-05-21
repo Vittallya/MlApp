@@ -14,12 +14,28 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1000, 306)
+        Dialog.resize(1000, 290)
+        Dialog.setMinimumSize(QtCore.QSize(1000, 290))
+        Dialog.setMaximumSize(QtCore.QSize(1000, 290))
+        Dialog.setStyleSheet("font: 10pt \"Trebuchet MS\";")
         self.pushButton = QtWidgets.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(450, 220, 111, 41))
+        self.pushButton.setGeometry(QtCore.QRect(430, 210, 141, 41))
+        self.pushButton.setStyleSheet("QPushButton{\n"
+"    border-radius: 5px;\n"
+"    font-size: 11pt;\n"
+"    background-color: transparent;\n"
+"    border: 2px solid rgb(38, 86, 131);\n"
+"    transition: all 1s ease-out;\n"
+"    color: rgb(38, 86, 131);\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: rgb(38, 86, 131);\n"
+"color: white;\n"
+"}\n"
+"")
         self.pushButton.setObjectName("pushButton")
         self.layoutWidget = QtWidgets.QWidget(Dialog)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 921, 171))
+        self.layoutWidget.setGeometry(QtCore.QRect(40, 10, 921, 171))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.verticalLayout_30.setContentsMargins(0, 0, 0, 0)

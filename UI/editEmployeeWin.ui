@@ -6,21 +6,51 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>544</width>
-    <height>727</height>
+    <width>560</width>
+    <height>730</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>560</width>
+    <height>730</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>560</width>
+    <height>730</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 10pt &quot;Trebuchet MS&quot;;</string>
+  </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>650</y>
-     <width>131</width>
+     <x>200</x>
+     <y>660</y>
+     <width>141</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	border-radius: 5px;
+	font-size: 11pt;
+	background-color: transparent;
+	border: 2px solid rgb(38, 86, 131);
+	transition: all 1s ease-out;
+	color: rgb(38, 86, 131);
+}
+QPushButton:hover{
+background-color: rgb(38, 86, 131);
+color: white;
+}
+</string>
    </property>
    <property name="text">
     <string>Применить</string>
@@ -29,9 +59,9 @@
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>60</x>
      <y>10</y>
-     <width>341</width>
+     <width>401</width>
      <height>51</height>
     </rect>
    </property>
@@ -39,7 +69,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 16pt;
+    <string notr="true">font: 16pt &quot;Century Gothic&quot;;
 font-weight: bold;
 </string>
    </property>
@@ -50,8 +80,8 @@ font-weight: bold;
   <widget class="QCheckBox" name="cbChangeLoginPsw">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>340</y>
+     <x>40</x>
+     <y>410</y>
      <width>199</width>
      <height>20</height>
     </rect>
@@ -64,9 +94,9 @@ font-weight: bold;
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>370</y>
+     <y>440</y>
      <width>481</width>
-     <height>221</height>
+     <height>201</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -75,6 +105,12 @@ font-weight: bold;
       <layout class="QVBoxLayout" name="boxLogin">
        <item>
         <widget class="QLabel" name="label_4">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="text">
           <string>Логин в системе</string>
          </property>
@@ -82,6 +118,12 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QLineEdit" name="editLogin">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -95,6 +137,12 @@ font-weight: bold;
       <layout class="QVBoxLayout" name="boxPsw">
        <item>
         <widget class="QLabel" name="label_5">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="text">
           <string>Пароль</string>
          </property>
@@ -102,6 +150,12 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QLineEdit" name="editPassword">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -115,6 +169,12 @@ font-weight: bold;
       <layout class="QVBoxLayout" name="boxPswElse">
        <item>
         <widget class="QLabel" name="label_7">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="text">
           <string>Пароль еще раз</string>
          </property>
@@ -122,6 +182,12 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QLineEdit" name="editPassword_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -138,7 +204,7 @@ font-weight: bold;
      <x>41</x>
      <y>101</y>
      <width>481</width>
-     <height>231</height>
+     <height>291</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -146,6 +212,12 @@ font-weight: bold;
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="text">
          <string>Фамилия</string>
         </property>
@@ -153,6 +225,12 @@ font-weight: bold;
       </item>
       <item>
        <widget class="QLineEdit" name="editSurname">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::Normal</enum>
         </property>
@@ -164,6 +242,12 @@ font-weight: bold;
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QLabel" name="label_2">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="text">
          <string>Имя</string>
         </property>
@@ -171,6 +255,12 @@ font-weight: bold;
       </item>
       <item>
        <widget class="QLineEdit" name="editName">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::Normal</enum>
         </property>
@@ -182,6 +272,12 @@ font-weight: bold;
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="label_3">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="text">
          <string>Отчество</string>
         </property>
@@ -189,6 +285,12 @@ font-weight: bold;
       </item>
       <item>
        <widget class="QLineEdit" name="editMidname">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::Normal</enum>
         </property>
@@ -200,13 +302,26 @@ font-weight: bold;
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <item>
        <widget class="QLabel" name="label_6">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="text">
          <string>Роль</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cmRoles"/>
+       <widget class="QComboBox" name="cmRoles">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

@@ -15,8 +15,22 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(663, 416)
+        Dialog.setStyleSheet("font: 9pt \"Trebuchet MS\";")
         self.bt_accept = QtWidgets.QPushButton(Dialog)
         self.bt_accept.setGeometry(QtCore.QRect(260, 330, 141, 41))
+        self.bt_accept.setStyleSheet("QPushButton{\n"
+"    border-radius: 5px;\n"
+"    font-size: 11pt;\n"
+"    background-color: transparent;\n"
+"    border: 2px solid rgb(38, 86, 131);\n"
+"    transition: all 1s ease-out;\n"
+"    color: rgb(38, 86, 131);\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: rgb(38, 86, 131);\n"
+"color: white;\n"
+"}\n"
+"")
         self.bt_accept.setObjectName("bt_accept")
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(80, 90, 521, 192))
@@ -27,6 +41,7 @@ class Ui_Dialog(object):
         self.tableWidget.verticalHeader().setVisible(False)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(130, 10, 401, 51))
+        self.label.setStyleSheet("font: 12pt \"Century Gothic\";")
         self.label.setObjectName("label")
 
         self.retranslateUi(Dialog)

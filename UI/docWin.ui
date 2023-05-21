@@ -7,11 +7,35 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>640</height>
+    <height>550</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>550</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>550</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>Врач</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Trebuchet MS&quot;;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="tableWidget">
@@ -19,7 +43,7 @@
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>771</width>
+      <width>781</width>
       <height>351</height>
      </rect>
     </property>
@@ -36,11 +60,26 @@
    <widget class="QPushButton" name="btMakeAnalyze">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>540</y>
+      <x>280</x>
+      <y>450</y>
       <width>201</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	border-radius: 5px;
+	font-size: 11pt;
+	background-color: transparent;
+	border: 2px solid rgb(38, 86, 131);
+	transition: all 1s ease-out;
+	color: rgb(38, 86, 131);
+}
+QPushButton:hover{
+background-color: rgb(38, 86, 131);
+color: white;
+}
+</string>
     </property>
     <property name="text">
      <string>Определить состояние</string>
@@ -52,7 +91,7 @@
       <x>20</x>
       <y>50</y>
       <width>191</width>
-      <height>21</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="orientation">
@@ -72,7 +111,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuemployeeName">
@@ -83,7 +122,6 @@
    </widget>
    <addaction name="menuemployeeName"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="exit">
    <property name="text">
     <string>Выход</string>
