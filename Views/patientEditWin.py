@@ -1,19 +1,11 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QTableWidgetItem, QApplication, QMainWindow, QDialog, QComboBox, QDoubleSpinBox
-from Services.docService import DocService
+from PyQt5.QtWidgets import QDialog, QDoubleSpinBox, QLineEdit
 from Services.Db import Db
-from Services.userService import UserService
-from Services.analyzeService import make_analyze
-from UI.docWin import Ui_MainWindow
 from Services.Db import Db
-import json
-import pandas as pd
-import numpy as np
-from Views.verdictWin import VerdictWin
-from Services.userService import UserService
 from UI.patientEditWin import Ui_Dialog
 from Views.patientDataWin import PatientDataWin
 from Services.Db import Db
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtCore import QRegExp
 
 class PatientEditWin(QDialog, Ui_Dialog):
     
@@ -31,6 +23,11 @@ class PatientEditWin(QDialog, Ui_Dialog):
         
         self.cmDoctors.clear()
         self.patNumsId = None
+        
+        lines = self.findChildren(QLineEdit)
+        
+        for line in lines:
+            line.textChanged.connect(self.text_changed)
         
         for index, emp in enumerate(emps):
             self.cmDoctors.addItem(str(emp[1]), emp[0])            
@@ -52,6 +49,23 @@ class PatientEditWin(QDialog, Ui_Dialog):
             self.editLastName.setText(patData[2])
             self.editMidName.setText(patData[3])
         pass        
+        
+        
+    def text_changed(self, text):
+        sender = self.sender()
+        #validator = sender.validator()
+        validator = QRegExpValidator(QRegExp(r'.+'))
+        state = validator.validate(text, 0)[0]
+        
+        if state != 2:
+            sender.setStyleSheet('QLineEdit { border: 1px solid red }')
+        else:
+            sender.setStyleSheet('')
+
+        childs = self.findChildren(QLineEdit)          
+        allCorrect = all([validator.validate(line.text(), 0)[0] == 2 for line in childs])
+        
+        self.btAccept.setEnabled(allCorrect)       
         
         
     def on_switch_to_data_clicked(self):

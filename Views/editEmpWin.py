@@ -1,5 +1,5 @@
 from UI.editEmployeeWin import Ui_Dialog
-from PyQt5.QtWidgets import QDialog, QLineEdit, QComboBox
+from PyQt5.QtWidgets import QDialog, QLineEdit
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtCore import QRegExp
 
@@ -20,6 +20,12 @@ class EditEmployeeWin(QDialog, Ui_Dialog):
         #self.editPassword.setValidator(QRegExpValidator(QRegExp(r"^(?=.*[0-9])(?=.*[a-z])([a-z0-9_-]+)$"), self.editPassword))
         #self.editPassword.keyPressed.connect(self.on_line_edit_key_pressed)
         
+        #validator = QRegExpValidator(QRegExp(r"[\.]+"))
+        self.pushButton.setEnabled(self.isEdit)
+        
+        for lineEdit in self.findChildren(QLineEdit):
+            #lineEdit.setValidator(validator)
+            lineEdit.textChanged.connect(self.on_line_edit_key_pressed)
         
         for index, role in enumerate(roles):
             self.cmRoles.addItem(str(role[1]), role[0])            
@@ -41,7 +47,23 @@ class EditEmployeeWin(QDialog, Ui_Dialog):
             self.cbChangeLoginPsw.hide()   
     
     def on_line_edit_key_pressed(self, event):
-        pass
+        sender = self.sender()
+        #validator = sender.validator()
+        validator = QRegExpValidator(QRegExp(r'.+'))
+        state = validator.validate(event, 0)[0]
+        
+        if state != 2:
+            sender.setStyleSheet('QLineEdit { border: 1px solid red }')
+        else:
+            sender.setStyleSheet('')
+
+        childsEmpData = self.frameEmpData.findChildren(QLineEdit)        
+        childsUserData = self.frameUserData.findChildren(QLineEdit)        
+        empCorrect = all([validator.validate(line.text(), 0)[0] == 2 for line in childsEmpData])
+        userCorrect = all([validator.validate(line.text(), 0)[0] == 2 for line in childsUserData])
+        
+        self.pushButton.setEnabled(empCorrect and (userCorrect or self.isEdit and not self.cbChangeLoginPsw.isChecked()))       
+        
     
     def state_changed(self, checked):
         self.toggle_boxes(checked)

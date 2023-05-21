@@ -12,6 +12,7 @@ from datetime import datetime
 from Views.patientEditWin import PatientEditWin
 from Views.editEmpWin import EditEmployeeWin
 from Services.employeeService import EmployeeService
+from Views.coefsWin import CoefsWin
 # qt_creator_file_admin_window = "UI/docWin.ui"
 # Ui_Admin_Window, QtBaseClassAdmin = uic.loadUiType(qt_creator_file_admin_window)
 
@@ -60,6 +61,7 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btExit.triggered.connect(self.exitAction)
         self.bt_makeAnalyze.clicked.connect(self.make_analyze_pressed)
         self.bt_removeCoefs.clicked.connect(self.on_remove_clicked)
+        self.bt_viewCoefs.clicked.connect(self.on_view_coefs_clicked)
         
         self.btAdd.clicked.connect(self.on_add_clicked)
         self.btRemove.clicked.connect(self.on_remove_clicked)
@@ -92,7 +94,19 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 emp_data = self.db.getFirst('''SELECT * FROM "Employee" WHERE Guid = %s''', (guid,))
                 self.prepareWinEmp(emp_data)
                 
-                
+    def on_view_coefs_clicked(self):
+        rows = list(set(index.row() for index in self.tableAnalyze.selectedIndexes()))
+        
+        if len(rows) > 0:
+            rowIndex = rows[0]
+            id = self.tableAnalyze.item(rowIndex, 0).text()
+            
+            ml_coefsDb = self.db.getFirst(''' SELECT * FROM "ML_DATA" WHERE Id = %s''', (id,))
+            ml_dict = dict(json.loads(ml_coefsDb[2]))
+            
+            CoefsWin(self, ml_dict).show()
+
+            
     
     def on_remove_clicked(self):
         if self.index == 1:
@@ -273,8 +287,10 @@ class AdminWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.index = self.tabWidget.currentIndex()
         if self.index == 2:
             self.frame.hide()
+            self.frame1.show()
         else:
             self.frame.show()
+            self.frame1.hide()
     
     def make_analyze_pressed(self):
         with self.db.getConnection() as conn:
